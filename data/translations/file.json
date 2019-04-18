@@ -1,0 +1,18 @@
+{
+    "arm": {
+        "home": "Գլխավոր",
+        "about": "Մեր մասին",
+        "news": "Նորություններ",
+        "whatWeDo": "Մեր աշխատանքը",
+        "media": "Մեդիա"
+    },
+    "eng": {
+        "home": "Home",
+        "about": "About Us",
+        "news": "News",
+        "whatWeDo": "What We Do",
+        "media": "Media"
+    },
+    "rus": {
+    }
+}

@@ -1,0 +1,35 @@
+<?php
+$this->headTitle('View type');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Manage types'=>$this->url('main'),
+            'View type'=>$this->url('main', ['action'=>'view', 'id'=>$type->getId()])
+            ]);
+?>
+
+<h1>View type:  <?= $this->escapeHtml($type->getText()) ?></h1>
+
+<p>
+    <a class="btn btn-default" href="<?= $this->url('type',
+            ['action'=>'edit', 'id'=>$type->getId()]); ?>">
+        <span class="glyphicon glyphicon-pencil" ></span> Edit
+    </a>
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped table-bordered">
+             <tr>
+                <th>ID:</th>
+                <td><?= $this->escapeHtml($type->getId()) ?></th>
+            </tr>
+            <tr>
+                <th>Text:</th>
+                <td><?= $this->escapeHtml($type->getText()) ?></th>
+            </tr>
+        </table>
+    </div>
+</div>

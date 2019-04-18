@@ -1,0 +1,57 @@
+<?php
+$this->headTitle('Users');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Manage types'=>$this->url('main'),
+            ]);
+?>
+
+<h1>Manage types</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('type', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New type
+</a>
+</p>
+
+<table class="table table-striped">
+
+   <tr>
+        <th>ID</th>
+        <th>Text</th>
+        <th>Actions</th>
+    </tr>
+    
+    <?php foreach ($types as $type): ?>
+    
+    <tr>
+        <td><?= $this->escapeHtml($type->getId()); ?></td>
+        <td>
+            <a href="<?= $this->url('type', ['action'=>'view', 'id'=>$type->getId()]); ?>">
+                <?= $this->escapeHtml($type->getText()); ?>
+            </a> 
+        </td>
+        <td>
+            <a class="btn btn-info" href="<?= $this->url('type',
+                    ['action'=>'edit', 'id'=>$type->getId()]); ?>">
+                <span class="glyphicon glyphicon-pencil" ></span> Edit
+            </a>
+            <a class="btn btn-default" href="<?= $this->url('type',
+                    ['action'=>'delete', 'id'=>$type->getId()]); ?>">
+                <span class="glyphicon glyphicon-remove"></span> Delete
+            </a>
+        </td>
+    </tr>
+        
+    <?php endforeach; ?>   
+    
+</table>
+
+<?= $this->paginationControl($types,
+                    'Sliding',
+                    'user/partial/paginator', 
+                    array('route' => 'type')); ?>

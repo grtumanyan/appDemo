@@ -1,0 +1,12 @@
+<?php
+$this->headTitle('Admin');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Admin'=>$this->url('application', ['action'=>'admin']),
+            ]);
+?>
+
+<h2>ADMIN PAGE</h2>

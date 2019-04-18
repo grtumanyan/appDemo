@@ -1,0 +1,12 @@
+<?php
+$this->headTitle('News');
+
+$this->mainMenu()->setActiveItemId('news');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'News'=>$this->url('news'),
+            ]);
+?>
+
+<h1>News</h1>

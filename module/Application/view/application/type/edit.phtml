@@ -1,0 +1,41 @@
+<?php
+$this->headTitle('Edit type');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Manage types'=>$this->url('main'),
+            'Edit type'=>$this->url('main', ['action'=>'edit', 'id'=>$type->getId()])
+            ]);
+
+$form->get('text')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'text'
+    ]);
+
+$form->get('submit')
+        ->setAttributes(['class'=>'btn btn-primary'])
+        ->setValue('Save');
+
+$form->prepare();
+?>
+
+<h1>Edit type <?= $this->escapeHtml($type->getText()) ?></h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('text')); ?>
+            <?= $this->formElement($form->get('text')); ?>
+            <?= $this->formElementErrors($form->get('text')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

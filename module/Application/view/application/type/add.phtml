@@ -1,0 +1,43 @@
+<?php
+$this->headTitle('Add Type');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Manage Types'=>$this->url('main'),
+            'Add Type'=>$this->url('main', ['action'=>'add'])
+            ]);
+
+$form->get('text')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Text'
+    ]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Add new type</h1>
+
+<p>
+    Please fill out the following form and click the <i>Add</i> button.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('text')); ?>
+            <?= $this->formElement($form->get('text')); ?>
+            <?= $this->formElementErrors($form->get('text')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

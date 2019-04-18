@@ -1,0 +1,74 @@
+<?php
+$this->headTitle('Edit Post');
+
+$this->mainMenu()->setActiveItemId('admin');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Manage Posts'=>$this->url('main'),
+            'Edit Post'=>$this->url('main', ['action'=>'edit', 'id'=>$post->getId()])
+            ]);
+
+$form->get('text')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'text'
+    ]);
+
+$form->get('title')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'title'
+    ]);
+
+$form->get('image')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Image'
+]);
+
+$form->get('file')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'File'
+]);
+
+$form->get('submit')
+        ->setAttributes(['class'=>'btn btn-primary'])
+        ->setValue('Save');
+
+$form->prepare();
+?>
+
+<h1>Edit Post <?= $this->escapeHtml($post->getTitle()) ?></h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('title')); ?>
+            <?= $this->formElement($form->get('title')); ?>
+            <?= $this->formElementErrors($form->get('title')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('text')); ?>
+            <?= $this->formElement($form->get('text')); ?>
+            <?= $this->formElementErrors($form->get('text')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('image')); ?>
+            <?= $this->formElement($form->get('image')); ?>
+            <?= $this->formElementErrors($form->get('image')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('file')); ?>
+            <?= $this->formElement($form->get('file')); ?>
+            <?= $this->formElementErrors($form->get('file')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

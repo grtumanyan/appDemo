@@ -152,7 +152,7 @@ class MainForm extends Form
                 [
                     'name' => 'FileRenameUpload',
                     'options' => [
-                        'target'=>'./data/upload/pdf',
+                        'target'=>'./data/upload/files',
                         'useUploadName'=>true,
                         'useUploadExtension'=>true,
                         'overwrite'=>true,

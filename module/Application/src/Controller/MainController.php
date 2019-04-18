@@ -61,7 +61,7 @@ class MainController extends AbstractActionController
     public function addAction()
     {
         // Create user form
-        $form = new MainForm($this->entityManager);
+        $form = new MainForm('create', $this->entityManager);
 
         // Get the list of all available roles (sorted by name).
         $allTypes = $this->entityManager->getRepository(Type::class)

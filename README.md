@@ -21,12 +21,6 @@ Enable development mode:
 composer development-enable
 ```
 
-Create `config/autoload/local.php` config file by copying its distrib version:
-
-```
-cp config/autoload/local.php.dist config/autoload/local.php
-```
-
 Edit `config/autoload/local.php` and set database password parameter.
 
 Login to MySQL client:

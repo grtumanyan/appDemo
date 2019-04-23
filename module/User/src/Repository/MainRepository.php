@@ -25,4 +25,23 @@ class MainRepository extends EntityRepository
 
         return $queryBuilder->getQuery();
     }
+
+    /**
+     * Retrieves all users in descending dateCreated order.
+     * @return Query
+     */
+    public function findAllPostsByTypeId($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->select('m')
+            ->from(Main::class, 'm')
+            ->where('m.type = ?1')
+            ->orderBy('m.dateCreated', 'DESC')
+            ->setParameter(1, $id);
+
+        return $queryBuilder->getQuery();
+    }
 }

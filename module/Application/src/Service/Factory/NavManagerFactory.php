@@ -17,11 +17,12 @@ class NavManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $authService = $container->get(\Zend\Authentication\AuthenticationService::class);
-        
+
+        $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $viewHelperManager = $container->get('ViewHelperManager');
         $urlHelper = $viewHelperManager->get('url');
         $rbacManager = $container->get(RbacManager::class);
         
-        return new NavManager($authService, $urlHelper, $rbacManager);
+        return new NavManager($authService, $urlHelper, $rbacManager, $entityManager);
     }
 }

@@ -5,18 +5,9 @@ $this->mainMenu()->setActiveItemId('admin');
 
 $this->pageBreadcrumbs()->setItems([
             'Home'=>$this->url('home'),
-            'Manage Posts'=>$this->url('main'),
+            'Posts'=>$this->url('main'),
             ]);
 ?>
-
-<h1>Manage Posts</h1>
-
-<p>
-<a class="btn btn-default" href="
-    <?= $this->url('main', ['action'=>'add']); ?>">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Post
-</a>
-</p>
 
 <table class="table table-striped">
 
@@ -28,7 +19,6 @@ $this->pageBreadcrumbs()->setItems([
         <th>Language</th>
         <th>Image</th>
         <th>Date Created</th>
-        <th>Actions</th>
     </tr>
     
     <?php foreach ($posts as $post): ?>
@@ -51,16 +41,6 @@ $this->pageBreadcrumbs()->setItems([
         </td>
         <td><?= $this->escapeHtml($post->getImage()); ?></td>
         <td><nobr><?= $this->escapeHtml($post->getDateCreated()); ?></nobr></td>
-        <td>
-            <a class="btn btn-info" href="<?= $this->url('main',
-                    ['action'=>'edit', 'id'=>$post->getId()]); ?>">
-                <span class="glyphicon glyphicon-pencil" ></span> Edit
-            </a>
-            <a class="btn btn-default" href="<?= $this->url('main',
-                    ['action'=>'delete', 'id'=>$post->getId()]); ?>">
-                <span class="glyphicon glyphicon-remove"></span> Delete
-            </a>
-        </td>
     </tr>
         
     <?php endforeach; ?>   
@@ -70,4 +50,4 @@ $this->pageBreadcrumbs()->setItems([
 <?= $this->paginationControl($posts,
                     'Sliding',
                     'user/partial/paginator', 
-                    array('route' => 'main')); ?>
+                    array('route' => 'post')); ?>

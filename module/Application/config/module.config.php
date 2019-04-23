@@ -38,6 +38,20 @@ return [
                     ],
                 ],
             ],
+            'postList' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/application[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\IndexController::class,
+                        'action'        => 'postList',
+                    ],
+                ],
+            ],
             'about' => [
                 'type' => Literal::class,
                 'options' => [
@@ -154,7 +168,7 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 // Allow anyone to visit "index" and "about" actions
-                ['actions' => ['index', 'about', 'news','whatWeDo', 'media', 'language', 'main'], 'allow' => '*'],
+                ['actions' => ['index', 'about', 'news','whatWeDo', 'media', 'language', 'postList', 'post'], 'allow' => '*'],
                 // Allow authorized users to visit "settings" action
                 ['actions' => ['settings', 'admin'], 'allow' => '@']
             ],Controller\MainController::class => [

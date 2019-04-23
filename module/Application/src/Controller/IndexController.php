@@ -5,6 +5,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Entity\User;
 use User\Entity\Main;
+use User\Entity\Type;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator;
 
 /**
  * This is the main controller class of the User Demo application. It contains
@@ -39,6 +43,56 @@ class IndexController extends AbstractActionController
 
         return new ViewModel([
             'data' => $data
+        ]);
+    }
+
+    /**
+     * This is the "postList" action. It is used to display the "About" page.
+     */
+    public function postListAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        if ($id!=null) {
+            $type = $this->entityManager->getRepository(Type::class)
+                ->find($id);
+        } else {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $page = $this->params()->fromQuery('page', 1);
+
+        $query = $this->entityManager->getRepository(Main::class)
+            ->findAllPostsByTypeId($id);
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(20);
+        $paginator->setCurrentPageNumber($page);
+
+        return new ViewModel([
+            'posts' => $paginator
+        ]);
+    }
+
+    /**
+     * This is the "about" action. It is used to display the "About" page.
+     */
+    public function postAction()
+    {
+        $id = $this->params()->fromRoute('id');
+
+        if ($id!=null) {
+            $post = $this->entityManager->getRepository(Main::class)
+                ->find($id);
+        } else {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        return new ViewModel([
+            'post' => $post,
         ]);
     }
 
@@ -149,26 +203,6 @@ class IndexController extends AbstractActionController
         if (!$this->access('user.manage') ) {
             return $this->redirect()->toRoute('not-authorized');
         }
-
-        return new ViewModel([
-            'admin' => $user
-        ]);
-    }
-
-    /**
-     * The "main" action.
-     */
-    public function mainAction()
-    {
-        $type = $this->params()->fromRoute('type');
-
-        if ($type==null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        $user = $this->entityManager->getRepository(Main::class)
-            ->findByType($type);
 
         return new ViewModel([
             'admin' => $user

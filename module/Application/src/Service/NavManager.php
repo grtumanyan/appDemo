@@ -1,6 +1,8 @@
 <?php
 namespace Application\Service;
 
+use User\Entity\Type;
+
 /**
  * This service is responsible for determining which items should be in the main menu.
  * The items may be different depending on whether the user is authenticated or not.
@@ -24,15 +26,23 @@ class NavManager
      * @var User\Service\RbacManager
      */
     private $rbacManager;
-    
+
+    /**
+     * Entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $entityManager;
+
+
     /**
      * Constructs the service.
      */
-    public function __construct($authService, $urlHelper, $rbacManager) 
+    public function __construct($authService, $urlHelper, $rbacManager, $entityManager)
     {
         $this->authService = $authService;
         $this->urlHelper = $urlHelper;
         $this->rbacManager = $rbacManager;
+        $this->entityManager = $entityManager;
     }
     
     /**
@@ -72,7 +82,17 @@ class NavManager
             'label' => 'Media',
             'link'  => $url('media')
         ];
-        
+
+        $typeDropdownItems = $this->getRelatedItems();
+
+        if (count($typeDropdownItems)!=0) {
+            $items[] = [
+                'id' => 'type',
+                'label' => 'Related Pages',
+                'dropdown' => $typeDropdownItems
+            ];
+        }
+
         // Display "Login" menu item for not authorized user only. On the other hand,
         // display "Admin" and "Logout" menu items only for authorized users.
         if (!$this->authService->hasIdentity()) {
@@ -105,7 +125,7 @@ class NavManager
             
             if ($this->rbacManager->isGranted(null, 'user.manage')) {
                 $adminDropdownItems[] = [
-                            'id' => 'admin',
+                            'id' => 'type',
                             'label' => 'Manage Types',
                             'link' => $url('type')
                         ];
@@ -147,6 +167,29 @@ class NavManager
         }
         
         return $items;
+    }
+
+    /**
+     * This method returns menu items depending on related pages.
+     */
+    public function getRelatedItems()
+    {
+        $url = $this->urlHelper;
+
+        $types = $this->entityManager->getRepository(Type::class)
+            ->findAll();
+
+        $typeDropdownItems = [];
+
+        foreach($types as $item){
+            $typeDropdownItems[] = [
+                'id' => 'users',
+                'label' => $item->getText(),
+                'link' => $url('postList', ['id'=>$item->getId()])
+            ];
+        }
+
+        return $typeDropdownItems;
     }
 }
 

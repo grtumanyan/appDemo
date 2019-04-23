@@ -1,0 +1,39 @@
+<?php
+$this->headTitle('Type');
+
+$this->mainMenu()->setActiveItemId('type');
+?>
+
+<table class="table table-striped">
+
+    <tr>
+        <th>Text</th>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Date Created</th>
+    </tr>
+
+    <?php foreach ($posts as $post): ?>
+        <?php $id = $post->getType(); ?>
+        <tr>
+            <td>
+                <a href="<?= $this->url('application', ['action'=>'post', 'id'=>$post->getId()]); ?>">
+                    <?= $this->escapeHtml($post->getText()); ?>
+                </a>
+            </td>
+            <td>
+                <?= $this->escapeHtml($post->getTitle()); ?></a>
+            </td>
+            <td><?= $this->escapeHtml($post->getImage()); ?></td>
+            <td><nobr><?= $this->escapeHtml($post->getDateCreated()); ?></nobr></td>
+        </tr>
+
+    <?php endforeach; ?>
+
+</table>
+
+<?= $this->paginationControl($posts,
+    'Sliding',
+    'user/partial/paginator',
+    array('route' => 'postList/'.$id)); ?>
+
